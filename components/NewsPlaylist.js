@@ -31,8 +31,8 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     const [playbackRate, setPlaybackRate] = useState(1);
     const [showNextPopup, setShowNextPopup] = useState(false);
     const [hasEnded, setHasEnded] = useState(false);
-    const [showInterstitial, setShowInterstitial] = useState(false);
-    const [pendingNextId, setPendingNextId] = useState(null);
+    // const [showInterstitial, setShowInterstitial] = useState(false);
+    // const [pendingNextId, setPendingNextId] = useState(null);
 
 
     const nextNews = {
@@ -380,11 +380,11 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                             <div>
                                 <button
                                     className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white mr-5 shadow-xl transition-transform active:scale-95"
-                                    onClick={() => {
-                                        setPendingNextId(currentId + 1);
-                                        setShowNextPopup(false);
-                                        setShowInterstitial(true);
-                                    }}
+                                    // onClick={() => {
+                                    //     setPendingNextId(currentId + 1);
+                                    //     setShowNextPopup(false);
+                                    //     setShowInterstitial(true);
+                                    // }}
                                 >
                                     <PiCaretDoubleRightFill size={25} />
                                 </button>
