@@ -8,8 +8,10 @@ function formatText(text = "") {
 
 // Backend API Fetch (Server-side)
 async function getAudioById(id) {
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/s1/api/v1/tts/get/${id}`
+    //console.log(url)
     const res = await fetch(
-        `http://10.10.20.199:5050/s1/api/v1/tts/get/${id}`,
+        url,
         { cache: "no-store" }
     );
 
@@ -220,7 +222,7 @@ export default async function AudioPage({ params }) {
 //       images: data.thumbnail
 //         ? [
 //             {
-//               url: `http://10.10.20.199:5050/images/${data.thumbnail}`,
+//             url: `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/images/${data.thumbnail}`,
 //               width: 1200,
 //               height: 630,
 //               alt: title,
@@ -234,7 +236,7 @@ export default async function AudioPage({ params }) {
 //       title,
 //       description,
 //       images: data.thumbnail
-//         ? [`http://10.10.20.199:5050/images/${data.thumbnail}`]
+//         ? [`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/images/${data.thumbnail}`]
 //         : [],
 //     },
 //   };
@@ -267,7 +269,7 @@ export default async function AudioPage({ params }) {
 //     duration: data.duration,
 //     inLanguage: language,
 //     thumbnailUrl: data.thumbnail
-//       ? `http://10.10.20.199:5050/images/${data.thumbnail}`
+//       ? `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/images/${data.thumbnail}`
 //       : undefined,
 //     datePublished: data.tts_time,
 //     dateModified: data.tts_mod_time,
