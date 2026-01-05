@@ -25,7 +25,7 @@ const Headersection = ({title}) => {
 
                 </motion.div>
 
-                <motion.p className="mt-4 text-center text-sm font-semibold text-gray-700"
+                <motion.p className="mt-4 text-center text-2xl font-semibold text-gray-700"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}>

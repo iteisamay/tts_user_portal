@@ -259,7 +259,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                     </div>
                 </motion.div>
 
-                <BannerAd slot="mid" className="my-4 mx-auto" />
+                {/* <BannerAd slot="mid" className="my-4 mx-auto" /> */}
 
                 {/* <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -392,7 +392,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                         </div>
                     </motion.div>
                 )}
-                {showInterstitial && (
+                {/* {showInterstitial && (
                     <InterstitialAd
                         onClose={async () => {
                             setShowInterstitial(false);
@@ -407,7 +407,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                             }
                         }}
                     />
-                )}
+                )} */}
             </div>
         </div>
     );

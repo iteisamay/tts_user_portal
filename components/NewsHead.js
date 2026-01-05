@@ -40,14 +40,15 @@ const NewsHead = ({
       </div>
 
       {/* CARD */}
-      <div className="relative w-full max-w-70 sm:max-w-md mx-auto">
+      <div className="relative w-[80%] sm:max-w-md mx-auto">
         <div className="absolute -inset-5 bg-linear-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20 blur-3xl animate-pulse" />
 
-       <div className="relative bg-white dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl pt-2 pb-2 px-3 sm:pt-4 sm:pb-4 sm:px-4 mt-12 mb-12">
+       {/* <div className="relative bg-white dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl pt-2 pb-2 px-3 sm:pt-4 sm:pb-4 sm:px-4 mt-12 mb-12"> */}
+       <div className="relative bg-white dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl -mx-4 -my-2 px-6 py-6 sm:mx-10 sm:my-10 mt-5">
           <Headersection
             title={title}
           />
-          <BannerAd slot="mid" className="my-4 mx-auto" />
+          {/* <BannerAd slot="mid" className="my-4 mx-auto" /> */}
           <NewsPlaylist
             id={id}
             language={language}
