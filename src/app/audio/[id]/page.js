@@ -9,7 +9,7 @@ function formatText(text = "") {
 // Backend API Fetch (Server-side)
 async function getAudioById(id) {
     const url = `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/s1/api/v1/tts/get/${id}`
-    //console.log(url)
+    console.log(url)
     const res = await fetch(
         url,
         { cache: "no-store" }
@@ -86,7 +86,7 @@ export default async function AudioPage({ params }) {
         "@type": "AudioObject",
         name: title,
         description: data.description,
-        contentUrl: data.audio_url,
+        contentUrl: data.audio_key,
         encodingFormat: "audio/mpeg",
         duration: data.duration,
         inLanguage: data.language,
@@ -103,7 +103,7 @@ export default async function AudioPage({ params }) {
         },
         potentialAction: {
             "@type": "ListenAction",
-            target: data.audio_url,
+            target: data.audio_key,
         },
     };
 
@@ -122,7 +122,7 @@ export default async function AudioPage({ params }) {
                 id={id}
                 language={language}
                 title={title}
-                audioUrl={data.audio_url}
+                audioUrl={data.audio_key}
                 thumbnail={data.thumbnail}
                 publishedAt={data.tts_time}
                 description={data.description}
@@ -162,7 +162,7 @@ export default async function AudioPage({ params }) {
 //     title: "Breaking News: Market Update",
 //     description: "Stock markets saw a major shift today as global indices reacted to inflation data.",
 //     language: "English",
-//     audio_url: "market-update.mp3",
+//     audio_key: "market-update.mp3",
 //     thumbnail: "demooo.jpg",
 //     duration: "PT45S",
 //     tts_time: "2025-01-01T10:00:00Z",
@@ -174,7 +174,7 @@ export default async function AudioPage({ params }) {
 //     title: "Weather Alert",
 //     description: "Heavy rainfall expected across several regions today.",
 //     language: "English",
-//     audio_url: "weather-alert.mp3",
+//     audio_key: "weather-alert.mp3",
 //     thumbnail: "demooo.jpg",
 //     duration: "PT30S",
 //     tts_time: "2025-01-01T11:00:00Z",
@@ -264,7 +264,7 @@ export default async function AudioPage({ params }) {
 //     "@type": "AudioObject",
 //     name: title,
 //     description: data.description,
-//     contentUrl: data.audio_url,
+//     contentUrl: data.audio_key,
 //     encodingFormat: "audio/mpeg",
 //     duration: data.duration,
 //     inLanguage: language,
@@ -283,7 +283,7 @@ export default async function AudioPage({ params }) {
 //     },
 //     potentialAction: {
 //       "@type": "ListenAction",
-//       target: data.audio_url,
+//       target: data.audio_key,
 //     },
 //   };
 
@@ -302,7 +302,7 @@ export default async function AudioPage({ params }) {
 //         id={id}
 //         language={language}
 //         title={title}
-//         audioUrl={data.audio_url}
+//         audioUrl={data.audio_key}
 //         thumbnail={data.thumbnail}
 //         publishedAt={data.tts_time}
 //         description={data.description}
