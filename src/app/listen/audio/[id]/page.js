@@ -1,4 +1,4 @@
-import NewsHead from "../../../../components/NewsHead";
+import NewsHead from "../../../../../components/NewsHead";
 import { notFound } from "next/navigation";
 
 // Helper
