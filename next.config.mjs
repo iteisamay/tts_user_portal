@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath:'/listen',
   reactCompiler: true,
   images: {
     remotePatterns: [
