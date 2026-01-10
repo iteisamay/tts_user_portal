@@ -70,7 +70,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
 
     const checkAudioExists = async (id) => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/s1/api/v1/tts/get/${id}`);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`);
             if (!res.ok) return false;
             const data = await res.json();
             return data?.data?.length > 0;
@@ -107,7 +107,6 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
         }
     };
 
-    /* ✅ UPDATED LOGIC ONLY */
     useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
@@ -129,6 +128,12 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
             audio.removeEventListener("loadedmetadata", handleMetadata);
         };
     }, [audioUrl, apiDuration]);
+
+    // useEffect(() => {
+    //     if (audioUrl === null || audioUrl === undefined || audioUrl === "") {
+    //         alert("There is a problem. Stay tuned with us.");
+    //     }
+    // }, [audioUrl]);
 
     const handleSeek = (e) => {
         const audio = audioRef.current;
@@ -209,7 +214,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                 {audioUrl && (
                     <audio
                         ref={audioRef}
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/s1/audio/${audioUrl}`}
+                        src={`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/audio/${audioUrl}`}
                         onTimeUpdate={handleTimeUpdate}
                         onEnded={handleEnded}
                     />
@@ -223,7 +228,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                 >
                     {thumbnail && (
                         <img
-                            src={`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/s1/images/${thumbnail}`}
+                            src={`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/images/${thumbnail}`}
                             alt={title || "News audio thumbnail"}
                             className="object-cover w-full h-full border rounded-lg border-black"
                         />
@@ -380,11 +385,11 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                             <div>
                                 <button
                                     className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white mr-5 shadow-xl transition-transform active:scale-95"
-                                    // onClick={() => {
-                                    //     setPendingNextId(currentId + 1);
-                                    //     setShowNextPopup(false);
-                                    //     setShowInterstitial(true);
-                                    // }}
+                                // onClick={() => {
+                                //     setPendingNextId(currentId + 1);
+                                //     setShowNextPopup(false);
+                                //     setShowInterstitial(true);
+                                // }}
                                 >
                                     <PiCaretDoubleRightFill size={25} />
                                 </button>

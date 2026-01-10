@@ -26,5 +26,12 @@ body {
   transition: background 0.3s;
 }
 
+/* Service inactive state */
+.service-inactive {
+  background-image: none !important;
+  background-color: var(--bg-color);
+}
+
+
 
 

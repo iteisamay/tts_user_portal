@@ -1,38 +1,83 @@
 import NewsHead from "../../../../../components/NewsHead";
 import { notFound } from "next/navigation";
 
-// Helper
+/* ---------------- Helper ---------------- */
 function formatText(text = "") {
     return text;
 }
 
-// Backend API Fetch (Server-side)
+/* ---------------- Safe fetch for metadata ---------------- */
+async function getAudioByIdSafe(id) {
+    try {
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
+            { cache: "no-store" }
+        );
+
+        if (!res.ok) return null;
+
+        const json = await res.json();
+
+        if (!json?.data || !Array.isArray(json.data) || json.data.length === 0) {
+            return null;
+        }
+
+        return json.data[0];
+    } catch {
+        return null;
+    }
+}
+
+/* ---------------- Main fetch ---------------- */
 async function getAudioById(id) {
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/s1/api/v1/tts/get/${id}`
-    console.log(url)
-    const res = await fetch(
-        url,
-        { cache: "no-store" }
-    );
+    let res;
+
+    //Catch ONLY backend crash / network failure
+    try {
+        res = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
+            { cache: "no-store" }
+        );
+    } catch {
+        //Backend is down / unreachable
+        return { serviceDown: true };
+    }
+
+    //Backend reachable → handle HTTP cases
+    if (res.status === 429) {
+        return {
+            title: "Too many requests. Please try again later.",
+            language: "",
+        };
+    }
 
     if (!res.ok) {
-        throw new Error("Failed to fetch audio data");
+        //Wrong ID / bad route → real 404
+        notFound();
     }
 
     const json = await res.json();
 
-    if (!json?.data?.length) {
-        throw new Error("Audio not found");
+    if (!json?.data || !Array.isArray(json.data) || json.data.length === 0) {
+        //Valid backend but no data → real 404
+        notFound();
     }
 
     return json.data[0];
 }
 
-// SEO Metadata
+/* ---------------- Metadata ---------------- */
 export async function generateMetadata({ params }) {
     const { id } = await params;
-    const data = await getAudioById(id);
-    // console.log(data)
+    const data = await getAudioByIdSafe(id);
+
+    if (!data) {
+        return {
+            title: "Audio Not Found",
+            description: "The requested audio could not be found.",
+            robots: { index: false, follow: false },
+        };
+    }
 
     const title = formatText(data.title);
     const description =
@@ -67,32 +112,43 @@ export async function generateMetadata({ params }) {
     };
 }
 
-// Page Component
+/* ---------------- Page ---------------- */
 export default async function AudioPage({ params }) {
     const { id } = await params;
-    let data;
-    try {
-        data = await getAudioById(id);
-    } catch (error) {
-        return notFound();
+
+    const data = await getAudioById(id);
+
+    /* ---------- Service Inactive UI ---------- */
+    if (data?.serviceDown) {
+        return (
+            <div className="service-inactive min-h-screen flex flex-col items-center justify-center text-center px-4">
+                <h1 className="text-2xl font-semibold text-gray-800 mb-3">
+                    This Service is Currently Inactive
+                </h1>
+                <p className="text-gray-600 max-w-md">
+                    Please stay tuned with us. We are working to restore the
+                    service as soon as possible.
+                </p>
+            </div>
+        );
     }
 
     const title = formatText(data.title);
-    const language = formatText(data.language);
+    const language = formatText(data.language || "");
 
     /* -------- JSON-LD -------- */
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "AudioObject",
         name: title,
-        description: data.description,
-        contentUrl: data.audio_key,
+        description: data.description || "",
+        contentUrl: data.audio_key || "",
         encodingFormat: "audio/mpeg",
-        duration: data.duration,
-        inLanguage: data.language,
+        duration: data.duration || "",
+        inLanguage: data.language || "",
         thumbnailUrl: data.thumbnail || undefined,
-        datePublished: data.tts_time,
-        dateModified: data.tts_mod_time,
+        datePublished: data.tts_time || "",
+        dateModified: data.tts_mod_time || "",
         publisher: {
             "@type": "Organization",
             name: "Ei Samay",
@@ -103,13 +159,12 @@ export default async function AudioPage({ params }) {
         },
         potentialAction: {
             "@type": "ListenAction",
-            target: data.audio_key,
+            target: data.audio_key || "",
         },
     };
 
     return (
         <>
-            {/* Structured Data */}
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
@@ -117,15 +172,14 @@ export default async function AudioPage({ params }) {
                 }}
             />
 
-            {/* Page UI */}
             <NewsHead
                 id={id}
                 language={language}
                 title={title}
-                audioUrl={data.audio_key}
-                thumbnail={data.thumbnail}
-                publishedAt={data.tts_time}
-                description={data.description}
+                audioUrl={data.audio_key || ""}
+                thumbnail={data.thumbnail || ""}
+                publishedAt={data.tts_time || ""}
+                description={data.description || ""}
             />
         </>
     );
