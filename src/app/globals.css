@@ -3,13 +3,13 @@
 :root {
   --bg-color: #f8fafc;
   --card-color: #ffffff;
-  --bg-image: url('/bg-light.jpg'); 
+  --bg-image: url('/listen/bg-light.jpg'); 
 }
 
 [data-theme="dark"] {
   --bg-color: #1f2937;
   --card-color: #111827;
-  --bg-image: url('/bg.jpg'); 
+  --bg-image: url('/listen/bg.jpg'); 
 }
 
 body {

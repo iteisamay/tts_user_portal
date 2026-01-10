@@ -11,7 +11,8 @@ import {
     FaRedo,
     FaAngleDoubleRight,
     FaAngleDoubleLeft,
-    FaShare
+    FaShare,
+    FaTimes
 } from "react-icons/fa";
 import { PiCaretDoubleRightFill } from "react-icons/pi";
 import InterstitialAd from "./ads/InterstitialAd";
@@ -31,6 +32,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     const [playbackRate, setPlaybackRate] = useState(1);
     const [showNextPopup, setShowNextPopup] = useState(false);
     const [hasEnded, setHasEnded] = useState(false);
+    const [nextPopupDismissed, setNextPopupDismissed] = useState(false);
     // const [showInterstitial, setShowInterstitial] = useState(false);
     // const [pendingNextId, setPendingNextId] = useState(null);
 
@@ -90,6 +92,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
             if (hasEnded) {
                 setShowNextPopup(false);
                 setHasEnded(false);
+                setNextPopupDismissed(false);
             }
             audio.play();
             setIsPlaying(true);
@@ -102,7 +105,12 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
 
         setCurrentTime(audio.currentTime);
 
-        if (duration - audio.currentTime <= 3 && duration > 0) {
+        if (
+            duration - audio.currentTime <= 3 &&
+            duration > 0 &&
+            !hasEnded &&
+            !nextPopupDismissed
+        ) {
             setShowNextPopup(true);
         }
     };
@@ -149,6 +157,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
         audio.currentTime = 0;
         setCurrentTime(0);
         setShowNextPopup(false);
+        setNextPopupDismissed(false);
         audio.play();
         setIsPlaying(true);
     };
@@ -157,6 +166,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
         setIsPlaying(false);
         setCurrentTime(0);
         setHasEnded(true);
+        setNextPopupDismissed(false);
         // setShowInterstitial(true);
     };
 
@@ -372,7 +382,17 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <div className="bg-white rounded-lg p-4 w-[90%] sm:w-[85%] shadow-xl flex items-center justify-between">
+                        <div className="relative bg-white rounded-lg p-4 w-[90%] sm:w-[85%] shadow-xl flex items-center justify-between">
+                            <button
+                                onClick={() => {
+                                    setShowNextPopup(false);
+                                    setNextPopupDismissed(true);
+                                }}
+                                className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 transition"
+                            >
+                                <FaTimes size={14} />
+                            </button>
+
                             <div>
                                 <p className="text-sm font-semibold mb-0.5">
                                     Listen Next
@@ -382,14 +402,10 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                                     Language: {nextNews.language}
                                 </p>
                             </div>
+
                             <div>
                                 <button
                                     className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white mr-5 shadow-xl transition-transform active:scale-95"
-                                // onClick={() => {
-                                //     setPendingNextId(currentId + 1);
-                                //     setShowNextPopup(false);
-                                //     setShowInterstitial(true);
-                                // }}
                                 >
                                     <PiCaretDoubleRightFill size={25} />
                                 </button>
@@ -397,6 +413,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                         </div>
                     </motion.div>
                 )}
+
                 {/* {showInterstitial && (
                     <InterstitialAd
                         onClose={async () => {

@@ -25,7 +25,7 @@ const NewsHead = ({
       viewport={{ once: true }}
     >
       {/* TOP BAR */}
-      <div className="fixed top-3 inset-x-0 flex items-center justify-between px-3 sm:px-6 z-50">
+      {/* <div className="fixed top-3 inset-x-0 flex items-center justify-between px-3 sm:px-6 z-50">
         <div className="relative w-20 h-7 sm:w-28 sm:h-10">
           <Image
             src="/eisamay.png"
@@ -37,14 +37,18 @@ const NewsHead = ({
           />
         </div>
         <ThemeToggle />
+      </div> */}
+
+      <div className="fixed top-3 inset-x-0 flex items-center justify-end px-3 sm:px-6 z-50">
+        <ThemeToggle />
       </div>
 
       {/* CARD */}
       <div className="relative w-[80%] sm:max-w-md mx-auto">
         <div className="absolute -inset-5 bg-linear-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20 blur-3xl animate-pulse" />
 
-       {/* <div className="relative bg-white dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl pt-2 pb-2 px-3 sm:pt-4 sm:pb-4 sm:px-4 mt-12 mb-12"> */}
-       <div className="relative bg-white dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl -mx-4 -my-2 px-6 py-6 sm:mx-10 sm:my-10 mt-5">
+        {/* <div className="relative bg-white dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl pt-2 pb-2 px-3 sm:pt-4 sm:pb-4 sm:px-4 mt-12 mb-12"> */}
+        <div className="relative bg-white dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl -mx-4 -my-2 px-6 py-6 sm:mx-10 sm:my-10 mt-5">
           <Headersection
             title={title}
           />
