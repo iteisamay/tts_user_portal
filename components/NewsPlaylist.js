@@ -30,18 +30,18 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [playbackRate, setPlaybackRate] = useState(1);
-    const [showNextPopup, setShowNextPopup] = useState(false);
+    // const [showNextPopup, setShowNextPopup] = useState(false);
     const [hasEnded, setHasEnded] = useState(false);
     const [nextPopupDismissed, setNextPopupDismissed] = useState(false);
     // const [showInterstitial, setShowInterstitial] = useState(false);
     // const [pendingNextId, setPendingNextId] = useState(null);
 
 
-    const nextNews = {
-        title: "Next Breaking News",
-        language: "English",
-        audioSrc: "/next-audio.mp3",
-    };
+    // const nextNews = {
+    //     title: "Next Breaking News",
+    //     language: "English",
+    //     audioSrc: "/next-audio.mp3",
+    // };
 
     const audioRef = useRef(null);
 
@@ -375,7 +375,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                     </abbr>
                 </motion.div>
 
-                {showNextPopup && (
+                {/* {showNextPopup && (
                     <motion.div
                         className="absolute inset-0 z-50 flex items-end sm:items-center justify-center pb-4 sm:pb-0"
                         initial={{ opacity: 0, y: 20 }}
@@ -412,7 +412,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                             </div>
                         </div>
                     </motion.div>
-                )}
+                )} */}
 
                 {/* {showInterstitial && (
                     <InterstitialAd
