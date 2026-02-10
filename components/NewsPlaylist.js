@@ -243,6 +243,15 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                             className="object-cover w-full h-full border rounded-lg border-black"
                         />
                     )}
+                    {
+                        !thumbnail && (
+                            <img
+                                src="/listen/eisamayone.jpg"
+                                alt={title || "News audio thumbnail"}
+                                className="object-cover w-full h-full border rounded-lg border-black"
+                            />
+                        )
+                    }
                 </motion.div>
 
                 <motion.div
