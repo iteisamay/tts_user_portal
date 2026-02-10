@@ -11,7 +11,7 @@ import {
     FaRedo,
     FaAngleDoubleRight,
     FaAngleDoubleLeft,
-    FaShare,
+    FaShareAlt,
     FaTimes
 } from "react-icons/fa";
 import { PiCaretDoubleRightFill } from "react-icons/pi";
@@ -50,25 +50,25 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     // Convert id prop to number
     const currentId = Number(id);
 
-    const handlePrev = async () => {
-        const prevId = currentId - 1;
-        const exists = await checkAudioExists(prevId);
-        if (exists) {
-            router.push(`/audio/${prevId}`);
-        } else {
-            router.push("/404");
-        }
-    };
+    // const handlePrev = async () => {
+    //     const prevId = currentId - 1;
+    //     const exists = await checkAudioExists(prevId);
+    //     if (exists) {
+    //         router.push(`/audio/${prevId}`);
+    //     } else {
+    //         router.push("/404");
+    //     }
+    // };
 
-    const handleNext = async () => {
-        const nextId = currentId + 1;
-        const exists = await checkAudioExists(nextId);
-        if (exists) {
-            router.push(`/audio/${nextId}`);
-        } else {
-            router.push("/404");
-        }
-    };
+    // const handleNext = async () => {
+    //     const nextId = currentId + 1;
+    //     const exists = await checkAudioExists(nextId);
+    //     if (exists) {
+    //         router.push(`/audio/${nextId}`);
+    //     } else {
+    //         router.push("/404");
+    //     }
+    // };
 
     const checkAudioExists = async (id) => {
         try {
@@ -90,7 +90,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
             setIsPlaying(false);
         } else {
             if (hasEnded) {
-                setShowNextPopup(false);
+                // setShowNextPopup(false);
                 setHasEnded(false);
                 setNextPopupDismissed(false);
             }
@@ -111,7 +111,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
             !hasEnded &&
             !nextPopupDismissed
         ) {
-            setShowNextPopup(true);
+            // setShowNextPopup(true);
         }
     };
 
@@ -156,7 +156,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
 
         audio.currentTime = 0;
         setCurrentTime(0);
-        setShowNextPopup(false);
+        // setShowNextPopup(false);
         setNextPopupDismissed(false);
         audio.play();
         setIsPlaying(true);
@@ -258,14 +258,14 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                         Language: {language}
                     </p> */}
 
-                    <div className="flex items-center justify-between mt-1">
+                    <div className="flex items-center justify-between mt-1 mb-1">
                         <p className="text-[11px] text-gray-500">
                             {/* Reporter: XYZ */}
                             Language: {language}
                         </p>
                         <div className="flex gap-3 text-gray-600">
                             <abbr title="Share">
-                                <FaShare onClick={handleShare} className="cursor-pointer hover:text-blue-600 hover:scale-110 transition" />
+                                <FaShareAlt onClick={handleShare} className="cursor-pointer hover:text-blue-600 hover:scale-110 transition" />
                             </abbr>
                             <abbr title="Replay">
                                 <FaRedo onClick={handleRedo} className="cursor-pointer hover:text-blue-600 hover:scale-110 hover:rotate-180 transition" />
@@ -348,9 +348,9 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <abbr title="Previous">
+                    {/* <abbr title="Previous">
                         <FaStepBackward size={18} className="cursor-pointer hover:scale-110 transition sm:size-[22]" onClick={handlePrev} />
-                    </abbr>
+                    </abbr> */}
 
                     <abbr title="Decrease Speed">
                         <FaAngleDoubleLeft size={26} className="cursor-pointer hover:scale-110 transition sm:size-[32]" onClick={handleSpeedDecrease} />
@@ -370,9 +370,9 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                         <FaAngleDoubleRight size={26} className="cursor-pointer hover:scale-110 transition sm:size-[32]" onClick={handleSpeedIncrease} />
                     </abbr>
 
-                    <abbr title="Next">
+                    {/* <abbr title="Next">
                         <FaStepForward size={18} className="cursor-pointer hover:scale-110 transition sm:size-[22]" onClick={handleNext} />
-                    </abbr>
+                    </abbr> */}
                 </motion.div>
 
                 {/* {showNextPopup && (
