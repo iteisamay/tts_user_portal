@@ -16,7 +16,7 @@ const Headersection = ({title}) => {
                     transition={{ duration: 0.5 }}
                 >
                     <Image
-                        src="/eisamay.png"
+                        src="/listen/eisamay.png"
                         alt="Header Banner"
                         fill
                         sizes="(max-width: 640px) 144px, (max-width: 768px) 192px, 240px"
