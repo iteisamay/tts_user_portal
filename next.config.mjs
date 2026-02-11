@@ -2,6 +2,7 @@
 const nextConfig = {
   basePath:'/listen',
   reactCompiler: true,
+  output: 'standalone',
   images: {
     remotePatterns: [
       {
