@@ -180,6 +180,7 @@ export default async function AudioPage({ params }) {
                 thumbnail={data.thumbnail || ""}
                 publishedAt={data.tts_time || ""}
                 description={data.description || ""}
+                duration={data.duration || ""} 
             />
         </>
     );

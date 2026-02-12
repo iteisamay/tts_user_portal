@@ -20,14 +20,8 @@ import BannerAd from "./ads/BannerAd";
 import { useTheme } from "next-themes";
 import { getMobileMenuStyles } from "@/app/mobileMenuStyles";
 
-/* ✅ ISO duration helper (PT16S → 16) */
-const parseISODuration = (iso) => {
-    if (!iso) return 0;
-    const match = iso.match(/PT(\d+)S/);
-    return match ? Number(match[1]) : 0;
-};
-
 const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, duration: apiDuration }) => {
+
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -38,7 +32,11 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     // const [showInterstitial, setShowInterstitial] = useState(false);
     // const [pendingNextId, setPendingNextId] = useState(null);
 
-
+    const parseISODuration = (iso) => {
+        if (!iso) return 0;
+        const match = iso.match(/PT(\d+)S/);
+        return match ? Number(match[1]) : 0;
+    };
     // const nextNews = {
     //     title: "Next Breaking News",
     //     language: "English",
@@ -118,26 +116,10 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     };
 
     useEffect(() => {
-        const audio = audioRef.current;
-        if (!audio) return;
-
-        if (apiDuration) {
-            setDuration(parseISODuration(apiDuration));
-        }
-
-        const handleMetadata = () => {
-            if (!apiDuration && audio.duration) {
-                setDuration(Math.floor(audio.duration));
-            }
-        };
-
-        audio.addEventListener("loadedmetadata", handleMetadata);
-        audio.load();
-
-        return () => {
-            audio.removeEventListener("loadedmetadata", handleMetadata);
-        };
-    }, [audioUrl, apiDuration]);
+  if (apiDuration) {
+    setDuration(parseISODuration(apiDuration));
+  }
+}, [apiDuration]);
 
     // useEffect(() => {
     //     if (audioUrl === null || audioUrl === undefined || audioUrl === "") {
@@ -239,6 +221,11 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                         src={`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/audio/${audioUrl}`}
                         onTimeUpdate={handleTimeUpdate}
                         onEnded={handleEnded}
+                        onLoadedMetadata={(e) => {
+                            if (!apiDuration) {
+                                setDuration(Math.floor(e.target.duration));
+                            }
+                        }}
                     />
                 )}
 
