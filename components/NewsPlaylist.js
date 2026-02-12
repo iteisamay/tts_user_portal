@@ -21,7 +21,6 @@ import { useTheme } from "next-themes";
 import { getMobileMenuStyles } from "@/app/mobileMenuStyles";
 
 const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, duration: apiDuration }) => {
-
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
