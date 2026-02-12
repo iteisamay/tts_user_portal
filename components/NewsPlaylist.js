@@ -168,8 +168,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     const handleShare = async () => {
     if (!audioUrl) return;
 
-    const shareUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/listen/audio/${audioUrl}`;
-
+    const shareUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/listen/audio/${id}`;
     try {
         if (navigator.share) {
             await navigator.share({
