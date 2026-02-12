@@ -1,12 +1,23 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useTheme } from "next-themes";
+import { getMobileMenuStyles } from "@/app/mobileMenuStyles";
 
 const Headersection = ({title}) => {
+    const { theme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => setMounted(true), []);
+    if (!mounted) return null;
+
+    const darkMode = theme === "dark";
+    const mobileMenuStyles = getMobileMenuStyles(darkMode);
+
     return (
         // <header className="w-full px-2 py-2">
-        <header className="w-full px-2 py-3 bg-linear-to-b from-white to-gray-100">
+        <header className={`w-full px-2 py-3 bg-linear-to-b ${mobileMenuStyles.Headerbg}`}>
             <div className="w-full mx-auto">
 
                 <motion.div
@@ -25,12 +36,12 @@ const Headersection = ({title}) => {
 
                 </motion.div>
 
-                <motion.p className="mt-4 text-center text-2xl font-semibold text-gray-700"
+                {/* <motion.p className="mt-4 text-center text-2xl font-semibold lg:text-base"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}>
                     {title}
-                </motion.p>
+                </motion.p> */}
             </div>
         </header>
 

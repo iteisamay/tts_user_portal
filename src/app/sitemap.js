@@ -1,7 +1,7 @@
 export default async function sitemap() {
   return [
     {
-      url: "https://yourdomain.com",
+      url: `${process.env.NEXT_PUBLIC_DOMAIN}`,
       lastModified: new Date(),
     },
   ];

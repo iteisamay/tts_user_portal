@@ -17,6 +17,8 @@ import {
 import { PiCaretDoubleRightFill } from "react-icons/pi";
 import InterstitialAd from "./ads/InterstitialAd";
 import BannerAd from "./ads/BannerAd";
+import { useTheme } from "next-themes";
+import { getMobileMenuStyles } from "@/app/mobileMenuStyles";
 
 /* ✅ ISO duration helper (PT16S → 16) */
 const parseISODuration = (iso) => {
@@ -217,9 +219,19 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
         audio.playbackRate = newRate;
     };
 
+    const { theme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => setMounted(true), []);
+    if (!mounted) return null;
+
+    const darkMode = theme === "dark";
+    const mobileMenuStyles = getMobileMenuStyles(darkMode);
+
+
     return (
         <div className="relative max-w-sm mx-auto">
-            <div className="bg-white rounded-xl p-3 sm:p-4 -mt-2 overflow-hidden">
+            <div className={`${mobileMenuStyles.Playlistbg} rounded-xl p-3 sm:p-4 -mt-2 overflow-hidden`}>
 
                 {audioUrl && (
                     <audio
@@ -260,19 +272,19 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <h2 className="text-base sm:text-lg font-bold leading-snug">
-                        {description}
+                    <h2 className="text-base sm:text-base font-bold leading-snug">
+                        {title}
                     </h2>
                     {/* <p className="text-[11px] text-gray-600">
                         Language: {language}
                     </p> */}
 
                     <div className="flex items-center justify-between mt-1 mb-1">
-                        <p className="text-[11px] text-gray-500">
+                        <p className={`text-[11px] ${mobileMenuStyles.Playlisticons}`}>
                             {/* Reporter: XYZ */}
                             Language: {language}
                         </p>
-                        <div className="flex gap-3 text-gray-600">
+                        <div className={`flex gap-3 ${mobileMenuStyles.Playlisticons}`}>
                             <abbr title="Share">
                                 <FaShareAlt onClick={handleShare} className="cursor-pointer hover:text-blue-600 hover:scale-110 transition" />
                             </abbr>
@@ -336,14 +348,14 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                         />
                     </div>
 
-                    <div className="flex justify-between text-[11px] text-black mt-1">
+                    <div className="flex justify-between text-[11px] mt-1">
                         <span>{formatTime(currentTime)}</span>
                         <span>{formatTime(duration)}</span>
                     </div>
                 </motion.div>
 
                 <motion.div
-                    className="flex justify-center items-center text-xs text-black -mt-3"
+                    className="flex justify-center items-center text-xs -mt-3"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}

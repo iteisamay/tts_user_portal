@@ -89,12 +89,12 @@ export async function generateMetadata({ params }) {
         openGraph: {
             title,
             description,
-            url: `https://yourdomain.com/audio/${id}`,
-            siteName: "ABCD News Audio",
+            url: `${process.env.NEXT_PUBLIC_DOMAIN}/audio/${id}`,
+            siteName: `${process.env.NEXT_PUBLIC_DOMAIN}`,
             images: data.thumbnail
                 ? [
                     {
-                        url: data.thumbnail,
+                        url: `${process.env.NEXT_PUBLIC_DOMAIN}/images/${data.thumbnail}`,
                         width: 1200,
                         height: 630,
                         alt: data.thumbnail_alt || title,
@@ -107,7 +107,7 @@ export async function generateMetadata({ params }) {
             card: "summary_large_image",
             title,
             description,
-            images: data.thumbnail ? [data.thumbnail] : [],
+            images: data.thumbnail ? [`${process.env.NEXT_PUBLIC_DOMAIN}/images/${data.thumbnail}`] : [],
         },
     };
 }

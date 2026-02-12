@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Headersection from "./Headersection";
 import NewsPlaylist from "./NewsPlaylist";
 import Image from "next/image";
 import ThemeToggle from "./ThemeToggle";
 import BannerAd from "./ads/BannerAd";
+import { useTheme } from "next-themes";
+import { getMobileMenuStyles } from "@/app/mobileMenuStyles";
 
 const NewsHead = ({
   id = "",
@@ -17,6 +19,16 @@ const NewsHead = ({
   duration = null,
   description = "News Audio1"
 }) => {
+
+  const { theme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => setMounted(true), []);
+    if (!mounted) return null;
+
+    const darkMode = theme === "dark";
+    const mobileMenuStyles = getMobileMenuStyles(darkMode);
+
   return (
     <motion.div
       className="relative w-full min-h-svh flex items-center justify-center px-0 sm:px-3 bg-transparent"
@@ -44,11 +56,11 @@ const NewsHead = ({
       </div>
 
       {/* CARD */}
-      <div className="relative w-[80%] sm:max-w-md mx-auto">
+      <div className="relative w-[80%] sm:max-w-md mx-auto lg:w-full">
         <div className="absolute -inset-5 bg-linear-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20 blur-3xl animate-pulse" />
 
         {/* <div className="relative bg-white dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl pt-2 pb-2 px-3 sm:pt-4 sm:pb-4 sm:px-4 mt-12 mb-12"> */}
-        <div className="relative bg-white dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl -mx-4 -my-2 px-6 py-6 sm:mx-10 sm:my-10 mt-5">
+        <div className={`relative ${mobileMenuStyles.Cardbg} dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl -mx-4 -my-2 px-6 py-6 mt-5`}>
           <Headersection
             title={title}
           />
