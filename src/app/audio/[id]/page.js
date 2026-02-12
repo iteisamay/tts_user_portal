@@ -94,7 +94,7 @@ export async function generateMetadata({ params }) {
             images: data.thumbnail
                 ? [
                     {
-                        url: `${process.env.NEXT_PUBLIC_DOMAIN}/images/${data.thumbnail}`,
+                        url: `${process.env.NEXT_PUBLIC_DOMAIN}/s2/images/${data.thumbnail}`,
                         width: 1200,
                         height: 630,
                         alt: data.thumbnail_alt || title,

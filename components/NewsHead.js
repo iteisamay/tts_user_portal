@@ -60,7 +60,7 @@ const NewsHead = ({
         <div className="absolute -inset-5 bg-linear-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20 blur-3xl animate-pulse" />
 
         {/* <div className="relative bg-white dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl pt-2 pb-2 px-3 sm:pt-4 sm:pb-4 sm:px-4 mt-12 mb-12"> */}
-        <div className={`relative ${mobileMenuStyles.Cardbg} dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl -mx-4 -my-2 px-6 py-6 sm:mx-10 sm:my-10 mt-5`}>
+        <div className={`relative ${mobileMenuStyles.Cardbg} dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl -mx-4 -my-2 px-6 py-6 sm:mx-10 sm:my-10 mt-5 lg:mx-0 lg:my-0`}>
           <Headersection
             title={title}
           />

@@ -33,8 +33,14 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
 
     const parseISODuration = (iso) => {
         if (!iso) return 0;
-        const match = iso.match(/PT(\d+)S/);
-        return match ? Number(match[1]) : 0;
+
+        const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+
+        const hours = parseInt(match?.[1] || 0);
+        const minutes = parseInt(match?.[2] || 0);
+        const seconds = parseInt(match?.[3] || 0);
+
+        return hours * 3600 + minutes * 60 + seconds;
     };
     // const nextNews = {
     //     title: "Next Breaking News",
@@ -115,10 +121,10 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     };
 
     useEffect(() => {
-  if (apiDuration) {
-    setDuration(parseISODuration(apiDuration));
-  }
-}, [apiDuration]);
+        if (apiDuration) {
+            setDuration(parseISODuration(apiDuration));
+        }
+    }, [apiDuration]);
 
     // useEffect(() => {
     //     if (audioUrl === null || audioUrl === undefined || audioUrl === "") {
@@ -160,27 +166,26 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     };
 
     const handleShare = async () => {
-        if (!audioUrl) return;
+    if (!audioUrl) return;
 
-        try {
-            const response = await fetch(audioUrl);
-            const blob = await response.blob();
+    const shareUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/listen/audio/${audioUrl}`;
 
-            const file = new File([blob], "news-audio.mp3", {
-                type: "audio/mpeg",
+    try {
+        if (navigator.share) {
+            await navigator.share({
+                title: title || "News Audio",
+                text: "Listen to this breaking news audio",
+                url: shareUrl,
             });
-
-            if (navigator.share && navigator.canShare({ files: [file] })) {
-                await navigator.share({
-                    title: title || "News Audio",
-                    text: "Listen to this breaking news audio",
-                    files: [file],
-                });
-            }
-        } catch (error) {
-            console.error("Error sharing audio:", error);
+        } else {
+            // fallback: copy to clipboard
+            await navigator.clipboard.writeText(shareUrl);
+            alert("Link copied to clipboard!");
         }
-    };
+    } catch (error) {
+        console.error("Error sharing:", error);
+    }
+};
 
     const handleSpeedDecrease = () => {
         const audio = audioRef.current;
@@ -221,9 +226,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                         onTimeUpdate={handleTimeUpdate}
                         onEnded={handleEnded}
                         onLoadedMetadata={(e) => {
-                            if (!apiDuration) {
-                                setDuration(Math.floor(e.target.duration));
-                            }
+                            setDuration(Math.floor(e.target.duration));
                         }}
                     />
                 )}
