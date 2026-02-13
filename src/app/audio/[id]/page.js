@@ -12,7 +12,7 @@ async function getAudioByIdSafe(id) {
     try {
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
-            { next: { revalidate: 180 } }
+            { cache: "no-store" }
         );
 
         if (!res.ok) return null;
@@ -37,7 +37,8 @@ async function getAudioById(id) {
     try {
         res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
-            { next: { revalidate: 180 } }
+            // { next: { revalidate: 180 } } //ISR
+            { cache: "no-store" }
         );
     } catch {
         //Backend is down / unreachable
