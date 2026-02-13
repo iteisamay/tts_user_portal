@@ -21,13 +21,13 @@ const NewsHead = ({
 }) => {
 
   const { theme, setTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-    useEffect(() => setMounted(true), []);
-    if (!mounted) return null;
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
 
-    const darkMode = theme === "dark";
-    const mobileMenuStyles = getMobileMenuStyles(darkMode);
+  const darkMode = theme === "dark";
+  const mobileMenuStyles = getMobileMenuStyles(darkMode);
 
   return (
     <motion.div
@@ -57,7 +57,7 @@ const NewsHead = ({
 
       {/* CARD */}
       <div className="relative w-[80%] sm:max-w-md mx-auto lg:w-[90%]">
-        <div className="absolute -inset-5 bg-linear-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20 blur-3xl animate-pulse" />
+        <div className="absolute -top-10 -bottom-10 -left-5 -right-5 sm:-inset-5 bg-linear-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20 blur-3xl animate-pulse" />
 
         {/* <div className="relative bg-white dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl pt-2 pb-2 px-3 sm:pt-4 sm:pb-4 sm:px-4 mt-12 mb-12"> */}
         <div className={`relative ${mobileMenuStyles.Cardbg} dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl -mx-4 -my-2 px-6 py-6 sm:mx-10 sm:my-10 mt-5 lg:mx-0 lg:my-0`}>
@@ -83,3 +83,54 @@ const NewsHead = ({
 };
 
 export default NewsHead;
+
+
+
+
+
+//  <motion.div
+//       className="relative w-full min-h-svh flex flex-col items-center bg-transparent pt-5"
+//       initial={false}
+//       whileInView={{ opacity: 1, y: 0 }}
+//       viewport={{ once: true }}
+//     >
+
+//       {/* Top Bar */}
+//       <div className="fixed top-3 inset-x-0 flex items-center justify-end px-3 sm:px-6 z-50">
+//         <ThemeToggle />
+//       </div>
+
+//       {/* Top Banner */}
+//       <div className="w-full flex justify-center mt-16">
+//         <BannerAd slot="top" />
+//       </div>
+
+//       {/* Main Card Section */}
+//       <div className="relative w-[90%] sm:max-w-md lg:w-[70%] mt-11 mb-3">
+
+//         <div className="absolute -top-10 -bottom-10 -left-5 -right-5 sm:-inset-5 bg-linear-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20 blur-3xl animate-pulse" />
+
+//         <div className={`relative ${mobileMenuStyles.Cardbg} dark:bg-slate-900 shadow-md dark:shadow-black/40 rounded-xl px-6 py-6`}>
+
+//           <Headersection title={title} />
+
+//           <NewsPlaylist
+//             id={id}
+//             language={language}
+//             description={description}
+//             title={title}
+//             audioUrl={audioUrl}
+//             thumbnail={thumbnail}
+//             publishedAt={publishedAt}
+//             duration={duration}
+//           />
+
+//         </div>
+//       </div>
+
+//       {/* Bottom Banner */}
+//       <div className="w-full flex justify-center mt-8 mb-6">
+//         <BannerAd slot="bottom" />
+//       </div>
+
+//     </motion.div>

@@ -139,17 +139,17 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
         setCurrentTime(value);
     };
 
-    const handleRedo = () => {
-        const audio = audioRef.current;
-        if (!audio) return;
+    // const handleRedo = () => {
+    //     const audio = audioRef.current;
+    //     if (!audio) return;
 
-        audio.currentTime = 0;
-        setCurrentTime(0);
-        // setShowNextPopup(false);
-        setNextPopupDismissed(false);
-        audio.play();
-        setIsPlaying(true);
-    };
+    //     audio.currentTime = 0;
+    //     setCurrentTime(0);
+    //     // setShowNextPopup(false);
+    //     setNextPopupDismissed(false);
+    //     audio.play();
+    //     setIsPlaying(true);
+    // };
 
     const handleEnded = () => {
         setIsPlaying(false);
@@ -166,25 +166,25 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     };
 
     const handleShare = async () => {
-    if (!audioUrl) return;
+        if (!audioUrl) return;
 
-    const shareUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/listen/audio/${id}`;
-    try {
-        if (navigator.share) {
-            await navigator.share({
-                title: title || "News Audio",
-                text: "Listen to this breaking news audio",
-                url: shareUrl,
-            });
-        } else {
-            // fallback: copy to clipboard
-            await navigator.clipboard.writeText(shareUrl);
-            alert("Link copied to clipboard!");
+        const shareUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/listen/audio/${id}`;
+        try {
+            if (navigator.share) {
+                await navigator.share({
+                    title: title || "News Audio",
+                    text: "Listen to this breaking news audio",
+                    url: shareUrl,
+                });
+            } else {
+                // fallback: copy to clipboard
+                await navigator.clipboard.writeText(shareUrl);
+                alert("Link copied to clipboard!");
+            }
+        } catch (error) {
+            console.error("Error sharing:", error);
         }
-    } catch (error) {
-        console.error("Error sharing:", error);
-    }
-};
+    };
 
     const handleSpeedDecrease = () => {
         const audio = audioRef.current;
@@ -267,18 +267,18 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                         Language: {language}
                     </p> */}
 
-                    <div className="flex items-center justify-between mt-1 mb-1">
-                        <p className={`text-[11px] ${mobileMenuStyles.Playlisticons}`}>
+                    <div className="flex items-center justify-between mt-1 mb-2">
+                        <p className={`text-[12px] ${mobileMenuStyles.Playlisticons}`}>
                             {/* Reporter: XYZ */}
                             Language: {language}
                         </p>
                         <div className={`flex gap-3 ${mobileMenuStyles.Playlisticons}`}>
                             <abbr title="Share">
-                                <FaShareAlt onClick={handleShare} className="cursor-pointer hover:text-blue-600 hover:scale-110 transition" />
+                                <FaShareAlt size={19} onClick={handleShare} className="cursor-pointer hover:text-blue-600 hover:scale-110 transition" />
                             </abbr>
-                            <abbr title="Replay">
+                            {/* <abbr title="Replay">
                                 <FaRedo onClick={handleRedo} className="cursor-pointer hover:text-blue-600 hover:scale-110 hover:rotate-180 transition" />
-                            </abbr>
+                            </abbr> */}
                         </div>
                     </div>
                 </motion.div>
@@ -311,7 +311,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <div className="relative w-full h-1.5 bg-gray-200 rounded">
+                    {/* <div className="relative w-full h-1.5 bg-gray-200 rounded">
 
                         <motion.div
                             className="absolute top-0 left-0 h-1.5 bg-blue-600 rounded"
@@ -334,6 +334,46 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                             disabled={!audioUrl}
                             className="absolute top-0 left-0 w-full h-1.5 opacity-0 cursor-pointer"
                         />
+                    </div> */}
+
+                    <div className="relative w-full h-1.5 bg-gray-200 rounded-full">
+
+                        <motion.div
+                            className="absolute top-0 left-0 h-1.5 bg-blue-600 rounded-full"
+                            initial={{ width: 0 }}
+                            animate={{
+                                width: duration
+                                    ? `${(currentTime / duration) * 100}%`
+                                    : "0%",
+                            }}
+                            transition={{ ease: "linear" }}
+                        />
+
+                        <motion.div
+                            className="absolute top-1/2 w-4 h-4 bg-blue-600 rounded-full shadow-md pointer-events-none"
+                            initial={{ left: 0 }}
+                            animate={{
+                                left: duration
+                                    ? `${(currentTime / duration) * 100}%`
+                                    : "0%",
+                            }}
+                            style={{
+                                transform: "translate(-50%, -50%)",
+                            }}
+                            transition={{ ease: "linear" }}
+                        />
+
+                        <input
+                            type="range"
+                            min={0}
+                            max={duration || 0}
+                            value={currentTime}
+                            step={1}
+                            onChange={handleSeek}
+                            disabled={!audioUrl}
+                            className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                        />
+
                     </div>
 
                     <div className="flex justify-between text-[11px] mt-1">
