@@ -4,8 +4,8 @@ export const getMobileMenuStyles = (darkMode) => ({
         : "bg-white ",
 
     Headerbg: darkMode
-        ? "from-black to-gray-700"
-        : "from-white to-gray-100",
+        ? "bg-black"
+        : "bg-white",
 
     Playlistbg: darkMode
         ? "bg-gray-700"
