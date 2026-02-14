@@ -72,7 +72,7 @@ const BannerAd = ({ slot = "default", className = "", imageSrc = "/banner.webp" 
             }}
         >
             {imageSrc ? (
-                <div className="relative w-full h-30 md:h-62.5">
+                <div className="relative w-full h-30 md:h-38 lg:h-40">
                     <Image
                         src={imageSrc}
                         alt={`Banner Ad – ${slot}`}

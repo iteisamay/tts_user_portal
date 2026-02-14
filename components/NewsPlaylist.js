@@ -274,7 +274,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                         </p>
                         <div className={`flex gap-3 ${mobileMenuStyles.Playlisticons}`}>
                             <abbr title="Share">
-                                <FaShareAlt size={19} onClick={handleShare} className="cursor-pointer hover:text-blue-600 hover:scale-110 transition" />
+                                <FaShareAlt size={19} onClick={handleShare} className="cursor-pointer hover:text-blue-600 hover:scale-120 transition" />
                             </abbr>
                             {/* <abbr title="Replay">
                                 <FaRedo onClick={handleRedo} className="cursor-pointer hover:text-blue-600 hover:scale-110 hover:rotate-180 transition" />
