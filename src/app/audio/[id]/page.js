@@ -12,7 +12,7 @@ async function getAudioByIdSafe(id) {
     try {
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
-            { cache: "no-store" }
+            // { cache: "no-store" }
         );
 
         if (!res.ok) return null;
@@ -38,7 +38,7 @@ async function getAudioById(id) {
         res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
             // { next: { revalidate: 180 } } //ISR
-            { cache: "no-store" }
+            // { cache: "no-store" }
         );
     } catch {
         //Backend is down / unreachable
@@ -68,20 +68,20 @@ async function getAudioById(id) {
     return json.data[0];
 }
 
-//SSR
-// export async function generateStaticParams() {
-//     const res = await fetch(
-//         `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
-//         { next: { revalidate: 300 } }
-//     );
+//SSG
+export async function generateStaticParams() {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get-pub-token`,
+        { next: { revalidate: 300 } }
+    );
 
-//     if (!res.ok) return [];
-//     const json = await res.json();
+    if (!res.ok) return [];
+    const json = await res.json();
 
-//     return json.data.map((item) => ({
-//         id: item.id.toString(),
-//     }));
-// }
+    return json.data.map((item) => ({
+        id: item.public_token,
+    }));
+}
 
 /* ---------------- Metadata ---------------- */
 export async function generateMetadata({ params }) {

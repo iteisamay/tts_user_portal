@@ -30,6 +30,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     const [nextPopupDismissed, setNextPopupDismissed] = useState(false);
     // const [showInterstitial, setShowInterstitial] = useState(false);
     // const [pendingNextId, setPendingNextId] = useState(null);
+    const [feedbackTriggered, setFeedbackTriggered] = useState(false);
 
     const parseISODuration = (iso) => {
         if (!iso) return 0;
@@ -104,19 +105,32 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
         }
     };
 
+    // const handleTimeUpdate = () => {
+    //     const audio = audioRef.current;
+    //     if (!audio) return;
+
+    //     setCurrentTime(audio.currentTime);
+
+    //     if (
+    //         duration - audio.currentTime <= 3 &&
+    //         duration > 0 &&
+    //         !hasEnded &&
+    //         !nextPopupDismissed
+    //     ) {
+    //         // setShowNextPopup(true);
+    //     }
+    // };
+
     const handleTimeUpdate = () => {
         const audio = audioRef.current;
         if (!audio) return;
 
         setCurrentTime(audio.currentTime);
 
-        if (
-            duration - audio.currentTime <= 3 &&
-            duration > 0 &&
-            !hasEnded &&
-            !nextPopupDismissed
-        ) {
-            // setShowNextPopup(true);
+        // After 30 seconds trigger global event
+        if (audio.currentTime >= 30 && !feedbackTriggered) {
+            window.dispatchEvent(new Event("triggerFeedbackPopup"));
+            setFeedbackTriggered(true);
         }
     };
 
@@ -151,12 +165,20 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     //     setIsPlaying(true);
     // };
 
+    // const handleEnded = () => {
+    //     setIsPlaying(false);
+    //     setCurrentTime(0);
+    //     setHasEnded(true);
+    //     setNextPopupDismissed(false);
+    //     // setShowInterstitial(true);
+    // };
+
     const handleEnded = () => {
         setIsPlaying(false);
         setCurrentTime(0);
         setHasEnded(true);
         setNextPopupDismissed(false);
-        // setShowInterstitial(true);
+        setFeedbackTriggered(false);
     };
 
     const formatTime = (time) => {
@@ -168,7 +190,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
     const handleShare = async () => {
         if (!audioUrl) return;
 
-        const shareUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/listen/audio/${id}`;
+        const shareUrl = `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/listen/audio/${id}`;
         try {
             if (navigator.share) {
                 await navigator.share({
@@ -221,7 +243,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                 {audioUrl && (
                     <audio
                         ref={audioRef}
-                        src={`${process.env.NEXT_PUBLIC_DOMAIN}/s2/audio/${audioUrl}`}
+                        src={`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/audio/${audioUrl}`}
                         onTimeUpdate={handleTimeUpdate}
                         onEnded={handleEnded}
                         onLoadedMetadata={(e) => {
@@ -238,7 +260,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                 >
                     {thumbnail && (
                         <img
-                            src={`${process.env.NEXT_PUBLIC_DOMAIN}/s2/images/${thumbnail}`}
+                            src={`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/images/${thumbnail}`}
                             alt={title || "News audio thumbnail"}
                             className="object-cover w-full h-full border rounded-lg border-black"
                         />

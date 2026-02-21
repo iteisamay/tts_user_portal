@@ -14,4 +14,10 @@ export const getMobileMenuStyles = (darkMode) => ({
     Playlisticons: darkMode
         ? "text-white"
         : "text-gray-500",
+
+    //ThemeToggle.js
+    feedback: darkMode
+        ? "bg-gray-700 text-white"
+        : "bg-white text-black",
+    
 });
