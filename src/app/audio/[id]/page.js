@@ -1,7 +1,7 @@
 import NewsHead from "../../../../components/NewsHead";
 import { notFound } from "next/navigation";
-export const revalidate = 180;
-export const dynamicParams = true;
+// export const revalidate = 180;
+// export const dynamicParams = true;
 
 /* ---------------- Helper ---------------- */
 function formatText(text = "") {
@@ -69,20 +69,20 @@ async function getAudioById(id) {
     return json.data[0];
 }
 
-//SSG
-export async function generateStaticParams() {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_ONE}/api/v1/tts/get-pub-token`,
-        { next: { revalidate: 300 } }
-    );
+// //SSG
+// export async function generateStaticParams() {
+//     const res = await fetch(
+//         `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_ONE}/api/v1/tts/get-pub-token`,
+//         { next: { revalidate: 300 } }
+//     );
 
-    if (!res.ok) return [];
-    const json = await res.json();
+//     if (!res.ok) return [];
+//     const json = await res.json();
 
-    return json.data.map((item) => ({
-        id: item.public_token,
-    }));
-}
+//     return json.data.map((item) => ({
+//         id: item.public_token,
+//     }));
+// }
 
 /* ---------------- Metadata ---------------- */
 export async function generateMetadata({ params }) {
