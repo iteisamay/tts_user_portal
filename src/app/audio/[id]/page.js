@@ -1,6 +1,5 @@
 import NewsHead from "../../../../components/NewsHead";
 import { notFound } from "next/navigation";
-export const revalidate = 180;
 
 /* ---------------- Helper ---------------- */
 function formatText(text = "") {
@@ -12,7 +11,7 @@ async function getAudioByIdSafe(id) {
     try {
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
-            { next: { revalidate: 180 } }
+            { cache: "no-store" }
         );
 
         if (!res.ok) return null;
@@ -34,7 +33,7 @@ async function getAudioById(id) {
     try {
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
-            { next: { revalidate: 180 } }
+            { cache: "no-store" }
         );
 
         // If fetch succeeds but returns non-2xx
