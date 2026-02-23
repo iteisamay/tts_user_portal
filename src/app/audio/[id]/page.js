@@ -71,7 +71,7 @@ async function getAudioById(id) {
 //SSG
 export async function generateStaticParams() {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get-pub-token`,
+        `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_ONE}/api/v1/tts/get-pub-token`,
         { next: { revalidate: 300 } }
     );
 
