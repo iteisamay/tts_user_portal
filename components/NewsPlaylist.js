@@ -243,7 +243,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                 {audioUrl && (
                     <audio
                         ref={audioRef}
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/audio/${audioUrl}`}
+                        src={`${process.env.NEXT_PUBLIC_DOMAIN}/audio/${audioUrl}`}
                         onTimeUpdate={handleTimeUpdate}
                         onEnded={handleEnded}
                         onLoadedMetadata={(e) => {
@@ -260,7 +260,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                 >
                     {thumbnail && (
                         <img
-                            src={`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/images/${thumbnail}`}
+                            src={`${process.env.NEXT_PUBLIC_DOMAIN}/images/${thumbnail}`}
                             alt={title || "News audio thumbnail"}
                             className="object-cover w-full h-full border rounded-lg border-black"
                         />
