@@ -1,6 +1,7 @@
 import NewsHead from "../../../../components/NewsHead";
 import { notFound } from "next/navigation";
 export const revalidate = 180;
+export const dynamicParams = true;
 
 /* ---------------- Helper ---------------- */
 function formatText(text = "") {
