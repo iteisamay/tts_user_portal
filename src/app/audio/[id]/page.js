@@ -1,7 +1,6 @@
 import NewsHead from "../../../../components/NewsHead";
 import { notFound } from "next/navigation";
-// export const revalidate = 180;
-// export const dynamicParams = true;
+export const revalidate = 180;
 
 /* ---------------- Helper ---------------- */
 function formatText(text = "") {
@@ -13,7 +12,7 @@ async function getAudioByIdSafe(id) {
     try {
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
-            // { cache: "no-store" }
+            { next: { revalidate: 180 } }
         );
 
         if (!res.ok) return null;
@@ -36,10 +35,9 @@ async function getAudioById(id) {
 
     //Catch ONLY backend crash / network failure
     try {
-        res = await fetch(
+        const res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
-            // { next: { revalidate: 180 } } //ISR
-            // { cache: "no-store" }
+            { next: { revalidate: 180 } }
         );
     } catch {
         //Backend is down / unreachable
@@ -68,21 +66,6 @@ async function getAudioById(id) {
 
     return json.data[0];
 }
-
-// //SSG
-// export async function generateStaticParams() {
-//     const res = await fetch(
-//         `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_ONE}/api/v1/tts/get-pub-token`,
-//         { next: { revalidate: 300 } }
-//     );
-
-//     if (!res.ok) return [];
-//     const json = await res.json();
-
-//     return json.data.map((item) => ({
-//         id: item.public_token,
-//     }));
-// }
 
 /* ---------------- Metadata ---------------- */
 export async function generateMetadata({ params }) {
