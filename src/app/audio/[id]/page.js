@@ -31,40 +31,40 @@ async function getAudioByIdSafe(id) {
 
 /* ---------------- Main fetch ---------------- */
 async function getAudioById(id) {
-    let res;
-
-    //Catch ONLY backend crash / network failure
     try {
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT_TWO}/api/v1/tts/get/${id}`,
             { next: { revalidate: 180 } }
         );
-    } catch {
-        //Backend is down / unreachable
+
+        // If fetch succeeds but returns non-2xx
+        if (!res) {
+            return { serviceDown: true };
+        }
+
+        if (res.status === 429) {
+            return {
+                title: "Too many requests. Please try again later.",
+                language: "",
+            };
+        }
+
+        if (!res.ok) {
+            notFound();
+        }
+
+        const json = await res.json();
+
+        if (!json?.data) {
+            notFound();
+        }
+
+        return Array.isArray(json.data) ? json.data[0] : json.data;
+
+    } catch (error) {
+        console.error("Frontend fetch failed:", error);
         return { serviceDown: true };
     }
-
-    //Backend reachable → handle HTTP cases
-    if (res.status === 429) {
-        return {
-            title: "Too many requests. Please try again later.",
-            language: "",
-        };
-    }
-
-    if (!res.ok) {
-        //Wrong ID / bad route → real 404
-        notFound();
-    }
-
-    const json = await res.json();
-
-    if (!json?.data || !Array.isArray(json.data) || json.data.length === 0) {
-        //Valid backend but no data → real 404
-        notFound();
-    }
-
-    return json.data[0];
 }
 
 /* ---------------- Metadata ---------------- */
