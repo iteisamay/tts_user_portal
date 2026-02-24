@@ -3,7 +3,6 @@
 
 import Script from 'next/script'
 import { Geist, Geist_Mono } from "next/font/google";
-import { GoogleAnalytics } from '@next/third-parties/google'
 import "./globals.css";
 import ThemeProviderWrapper from "./theme-provider";
 
@@ -31,7 +30,15 @@ export default function RootLayout({ children }) {
           {children}
         </ThemeProviderWrapper>
       </body>
-        <GoogleAnalytics gaId="G-G6WE90DNWD"/>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-G6WE90DNWD" />
+      <Script id="google-analytics">
+        {`
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G6WE90DNWD'); 
+  `}
+      </Script>
     </html>
   );
 }
