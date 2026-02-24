@@ -32,6 +32,7 @@
 
 
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google'
 import "./globals.css";
 import ThemeProviderWrapper from "./theme-provider";
 
@@ -55,6 +56,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} transition-colors`}>
+        <GoogleAnalytics gaId="G-G6WE90DNWD"/>
         <ThemeProviderWrapper>
           {children}
         </ThemeProviderWrapper>
