@@ -48,7 +48,7 @@ async function getAudioById(id) {
             };
         }
 
-        if (!res.ok) {
+        if (res.status === 404) {
             notFound();
         }
 
@@ -87,12 +87,12 @@ export async function generateMetadata({ params }) {
         title,
         description,
         alternates: {
-            canonical: `/audio/${id}`,
+            canonical: `${process.env.NEXT_PUBLIC_DOMAIN}/listen/audio/${id}`,
         },
         openGraph: {
             title,
             description,
-            url: `${process.env.NEXT_PUBLIC_DOMAIN}/audio/${id}`,
+            url: `${process.env.NEXT_PUBLIC_DOMAIN}/listen/audio/${id}`,
             siteName: `${process.env.NEXT_PUBLIC_DOMAIN}`,
             images: [
                 ...(data.thumbnail
@@ -102,7 +102,12 @@ export async function generateMetadata({ params }) {
                         height: 630,
                         alt: data.thumbnail_alt || title,
                     }]
-                    : []),
+                    : [{
+                        url: "/listen/eisamayone.jpg",
+                        width: 1200,
+                        height: 630,
+                        alt: data.thumbnail_alt || title,
+                    }]),
                 {
                     url: "/eisamay.png",
                     width: 600,
@@ -116,7 +121,7 @@ export async function generateMetadata({ params }) {
             card: "summary_large_image",
             title,
             description,
-            images: data.thumbnail ? [`${process.env.NEXT_PUBLIC_DOMAIN}/images/${data.thumbnail}`] : [],
+            images: data.thumbnail ? [`${process.env.NEXT_PUBLIC_DOMAIN}/images/${data.thumbnail}`] : ["/listen/eisamayone.jpg"],
         },
         other: {
             "og:audio": data.audio_key || "",
