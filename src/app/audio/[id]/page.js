@@ -107,13 +107,7 @@ export async function generateMetadata({ params }) {
                         width: 1200,
                         height: 630,
                         alt: data.thumbnail_alt || title,
-                    }]),
-                {
-                    url: "/eisamay.png",
-                    width: 600,
-                    height: 600,
-                    alt: "Logo",
-                }
+                    }])
             ],
             type: "article",
         },
