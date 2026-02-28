@@ -103,7 +103,7 @@ export async function generateMetadata({ params }) {
                         alt: data.thumbnail_alt || title,
                     }]
                     : [{
-                        url: "/listen/eisamayone.jpg",
+                        url: `${process.env.NEXT_PUBLIC_DOMAIN}/listen/eisamayone.jpg`,
                         width: 1200,
                         height: 630,
                         alt: data.thumbnail_alt || title,
@@ -121,11 +121,11 @@ export async function generateMetadata({ params }) {
             card: "summary_large_image",
             title,
             description,
-            images: data.thumbnail ? [`${process.env.NEXT_PUBLIC_DOMAIN}/images/${data.thumbnail}`] : ["/listen/eisamayone.jpg"],
+            images: data.thumbnail ? [`${process.env.NEXT_PUBLIC_DOMAIN}/images/${data.thumbnail}`] : [`${process.env.NEXT_PUBLIC_DOMAIN}/listen/eisamayone.jpg`],
         },
         other: {
-            "og:audio": data.audio_key || "",
-            "og:audio:secure_url": data.audio_key || "",
+            "og:audio": `${process.env.NEXT_PUBLIC_DOMAIN}/s2/audio/${data.audio_key}` || "",
+            "og:audio:secure_url": `${process.env.NEXT_PUBLIC_DOMAIN}/s2/audio/${data.audio_key}` || "",
             "og:audio:type": "audio/mpeg",
         },
     };
