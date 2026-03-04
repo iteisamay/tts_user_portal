@@ -13,6 +13,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export function generateViewport() {
+  return {
+    viewport: {
+      width: "device-width",
+      initialScale: 1,
+      maximumScale: 1,
+    },
+    themeColor: "#d40000",
+  };
+}
+
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_DOMAIN),
 
@@ -21,8 +32,6 @@ export const metadata = {
     "Stay updated with the latest Bengali news on politics, sports, business, entertainment, and more.",
 
   manifest: "/manifest.json",
-
-  themeColor: "#d40000",
 
   icons: {
     icon: [

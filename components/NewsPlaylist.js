@@ -150,6 +150,8 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
         const audio = audioRef.current;
         const value = e.target.value;
         audio.currentTime = value;
+        // console.log(audio.currentTime)
+        // console.log(value)
         setCurrentTime(value);
     };
 
