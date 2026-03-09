@@ -56,7 +56,7 @@ export default function RootLayout({ children }) {
         </ThemeProviderWrapper>
 
         {/* ✅ GA4 */}
-        <GoogleAnalytics gaId="G-G6WE9XXXXD" />
+        <GoogleAnalytics gaId={`${process.env.NEXT_PUBLIC_GAID}`} />
       </body>
     </html>
   );
