@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeProviderWrapper from "./theme-provider";
 import { GoogleAnalytics } from '@next/third-parties/google'
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,13 +51,32 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* GA4 Script */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GAID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GAID}', {
+              send_page_view: false
+            });
+          `}
+        </Script>
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} transition-colors`}>
         <ThemeProviderWrapper>
           {children}
         </ThemeProviderWrapper>
 
         {/* ✅ GA4 */}
-        <GoogleAnalytics gaId={`${process.env.NEXT_PUBLIC_GAID}`} />
+        {/* <GoogleAnalytics gaId={`${process.env.NEXT_PUBLIC_GAID}`} /> */}
       </body>
     </html>
   );

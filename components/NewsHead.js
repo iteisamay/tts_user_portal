@@ -24,6 +24,16 @@ const NewsHead = ({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
+    useEffect(() => {
+    if (window.gtag) {
+      console.log("In gtag")
+      window.gtag('event', 'page_view', {
+        page_title: document.title,
+        page_location: window.location.href,
+        author_name: 'Ei Samay'
+      });
+    }
+  }, []);
   if (!mounted) return null;
 
   const darkMode = theme === "dark";
