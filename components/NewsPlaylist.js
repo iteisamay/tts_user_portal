@@ -255,7 +255,7 @@ const NewsPlaylist = ({ id, language, description, title, audioUrl, thumbnail, d
                 )}
 
                 <motion.div
-                    className="relative w-full h-36 sm:h-44 md:h-52 rounded-lg overflow-hidden"
+                    className="relative w-full aspect-square rounded-lg overflow-hidden"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
